@@ -1,0 +1,25 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+int min(int a, int b){
+    return a < b?  a : b;
+}
+
+int findMinimumValue(struct TreeNode* root, int num){
+    if(!root)   return INT_MAX;
+    if(root->val == num)   return min(findMinimumValue(root->left, num), findMinimumValue(root->right, num));
+    else   return min(root->val, min(findMinimumValue(root->left, num), findMinimumValue(root->right, num)));
+}
+
+int findSecondMinimumValue(struct TreeNode* root) {
+    if(!root)   return -1;
+    int min = findMinimumValue(root, -1);
+    int second_min = findMinimumValue(root, min);
+    if(second_min == min || second_min != INTMAX)   return -1;
+    else    return second_min;
+}
